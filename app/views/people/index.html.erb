@@ -1,0 +1,52 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Membros</h1>
+
+<%= link_to "Novo membro", new_person_path, class: 'btn btn-link' %>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Ativo', people_path(active: true), class: "nav-link #{'active' if @active}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Inativo', people_path(active: false), class: "nav-link #{'active' unless @active}" %>
+  </li>
+</ul>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>National ID</th>
+      <th>Phone number</th>
+      <th>Created by</th>
+      <th>Active</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.national_id %></td>
+        <td><%= person.phone_number %></td>
+        <td><%= person.user.email %></td>
+        <td><%= person.active %></td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Actions">
+            <%= link_to "Show", person, class: "btn btn-sm btn-primary" %>
+            <%= link_to "Edit", edit_person_path(person), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Destroy", @person, method: :delete, class: "btn btn-sm btn-danger" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="apple_pagination me-auto">
+  <div class="page_info">
+    <%= page_entries_info @people %>
+  </div>
+  <%= will_paginate @people, container: false %>
+</div>
