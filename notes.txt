@@ -1,0 +1,33 @@
+# ligar rails cache
+bin/rails dev:cache
+
+bin/rails g controller dashboard index
+
+# config/routes.rb alterar linha do root
+root 'dashboard#index'
+
+# app/views/application.html.erb
+<li class="nav-item">
+  <%= link_to "Dashboard", root_path, class: 'nav-link' %>
+</li>
+
+
+# Gemfile
+gem "chartkick"
+
+
+bundle
+
+
+# config/importmap.rb
+pin "chartkick", to: "chartkick.js"
+pin "Chart.bundle", to: "Chart.bundle.js"
+
+
+# app/javascript/application.js
+import "chartkick"
+import "Chart.bundle"
+
+
+
+yarn add @popperjs/core

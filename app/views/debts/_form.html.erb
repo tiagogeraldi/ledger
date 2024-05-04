@@ -1,0 +1,35 @@
+<%= link_to "< Voltar", debts_path, class: 'btn btn-secondary btn-sm' %>
+
+<div class="row mt-4">
+  <div class="col-6">
+    <%= form_with(model: debt) do |form| %>
+      <% if debt.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(debt.errors.count, "error") %> prohibited this debt from being saved:</h2>
+
+          <ul>
+            <% debt.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= render '/layouts/person_search', form: form %>
+
+      <div class="mb-3">
+        <%= form.label :amount, 'Valor', class: 'form-label' %>
+        <%= form.number_field :amount, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :observation, 'Observação', class: 'form-label' %>
+        <%= form.text_area :observation, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.submit 'Salvar', class: 'btn btn-primary btn-lg' %>
+      </div>
+    <% end %>
+  </div>
+</div>

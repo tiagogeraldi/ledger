@@ -4,8 +4,32 @@ class PeopleController < ApplicationController
 
   # GET /people or /people.json
   def index
-    @active = params[:active].nil? || params[:active] == 'true' ? true : false
-    @people = Person.where(active: @active).paginate(per_page: 50, page: params[:page])
+    # TODO: ugly code
+    if !params[:active].nil?
+      if params[:active] == 'true'
+        @active = true
+      else
+        @active = false
+      end
+    else
+      @active = true
+    end
+
+    @people = Person.where(active: @active)
+  end
+
+  # GET /people/search?q=a_name
+  # Returns an HTML for autocomplete
+  def search
+    @people = Person.where(active: true).
+      where("UPPER(name) LIKE ?", "#{params[:q].upcase}%").
+      order(:name).
+      limit(10)
+
+    respond_to do |format|
+      format.html { render :search, layout: false }
+      format.json { render json: @people.to_json }
+    end
   end
 
   # GET /people/1 or /people/1.json
@@ -28,7 +52,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to person_url(@person), notice: "Person was successfully created." }
+        format.html { redirect_to person_url(@person), notice: "Criado com sucesso." }
         format.json { render :show, status: :created, location: @person }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +65,7 @@ class PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @person.update(person_params)
-        format.html { redirect_to person_url(@person), notice: "Person was successfully updated." }
+        format.html { redirect_to person_url(@person), notice: "Atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @person }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +79,7 @@ class PeopleController < ApplicationController
     @person.destroy!
 
     respond_to do |format|
-      format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
+      format.html { redirect_to people_url, notice: "Removido." }
       format.json { head :no_content }
     end
   end

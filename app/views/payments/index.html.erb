@@ -1,0 +1,43 @@
+<%# TODO: refactor DRY %>
+<% if notice.present? %>
+  <div class="alert alert-success">
+    <%= notice %>
+  </div>
+<% end %>
+
+<h1>Pagamentos</h1>
+
+<%= link_to new_payment_path, class: 'btn btn-light btn-sm' do %>
+  <i class="bi bi-plus"></i>
+  Novo pagamento
+<% end %>
+
+<div id="payments">
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Associado</th>
+        <th>Data de pagamento</th>
+        <th class="text-end">Valor</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payments.each do |payment| %>
+        <tr>
+          <td><%= payment.id %></td>
+          <td><%= payment.person.name %></td>
+          <td><%=l payment.paid_at if payment.paid_at %></td>
+          <td class="text-end"><%= payment.amount %></td>
+          <td class="text-end">
+            <%= button_to payment, method: :delete, class: "btn btn-danger btn-sm" do %>
+              <i class="bi bi-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,36 @@
+
+<%= link_to "< Voltar", payments_path, class: 'btn btn-secondary btn-sm' %>
+
+<div class="row mt-4">
+  <div class="col-6">
+    <%= form_with(model: payment) do |form| %>
+      <% if payment.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+
+          <ul>
+            <% payment.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= render '/layouts/person_search', form: form %>
+
+      <div class="mb-3">
+        <%= form.label :amount, class: 'form-label' %>
+        <%= form.number_field :amount, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :paid_at, class: 'form-label' %>
+        <%= form.date_field :paid_at, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.submit 'Salvar', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+ <div class="mb-3">
+    <%= form.label :person_id, 'Associado', class: 'form-label' %>
+    <div data-controller="autocomplete" data-autocomplete-url-value="<%= search_people_path %>" role="combobox">
+      <%= form.hidden_field :person_id, data: { autocomplete_target: 'hidden' } %>
+      <%= form.search_field :q, autofocus: true, data: { autocomplete_target: 'input' }, class: 'form-control' %>
+      <ul class="list-group" data-autocomplete-target="results"></ul>
+    </div>
+  </div>

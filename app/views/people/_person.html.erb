@@ -1,22 +1,36 @@
-<div id="<%= dom_id person %>">
+<div id="<%= dom_id person %>" class="my-3">
   <p>
-    <strong>Name:</strong>
+    <strong>Nome:</strong>
     <%= person.name %>
   </p>
 
   <p>
-    <strong>Phone number:</strong>
+    <strong>Telefone:</strong>
     <%= person.phone_number %>
   </p>
 
   <p>
-    <strong>National:</strong>
+    <strong>CPF / CNPJ:</strong>
     <%= person.national_id %>
   </p>
 
   <p>
-    <strong>Active:</strong>
-    <%= person.active %>
+    <strong>Ativo:</strong>
+    <%# TODO: refactor: use a helper method %>
+    <% if @person.active %>
+      <span class="text-success">
+        <i class="bi bi-check-circle"></i>
+      </span>
+    <% else %>
+      <span class="text-danger">
+        <i class="bi bi-x-circle"></i>
+      </span>
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Total de Débitos</strong>
+    <%= person.balance %>
   </p>
 
 </div>
